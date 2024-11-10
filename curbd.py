@@ -1,13 +1,3 @@
-"""
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Performs Current-Based Decomposition (CURBD) of multi-region data. Ref:
-%
-% Perich MG et al. Inferring brain-wide interactions using data-constrained
-% recurrent neural network models. bioRxiv. DOI: https://doi.org/10.1101/2020.12.18.423348
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-"""
-
 import math
 import random
 
@@ -17,6 +7,7 @@ import numpy.linalg
 
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+
 
 def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,
                         tauWN=0.1, ampInWN=0.01, nRunTrain=2000,
