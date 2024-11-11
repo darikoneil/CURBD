@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "PROJECT_NAME"
+name = "curbd"
 version = "0.0.0"
 description = "DESCRIPTION"
 readme = "README.md"
@@ -36,7 +36,7 @@ classifiers = [
 
 dependencies = [
     "numpy",
-    "maplotlib",
+    "matplotlib",
     "PyQt6",
     "seaborn",
 ]
@@ -48,8 +48,8 @@ dependencies = [
 
 
 [project.urls]
-documentation = "https://github.com/darikoneil/darik_oneil_python_template"
-repository = "https://github.com/darikoneil/darik_oneil_python_template"
+documentation = "https://github.com/darikoneil/CURBD"
+repository = "https://github.com/darikoneil/CURBD"
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,11 +96,11 @@ documentation = [
     "sphinx-rtd-theme",
 ]
 all = [
-    "PROJECT_NAME[testing]",
-    "PROJECT_NAME[linting]",
-    "PROJECT_NAME[coverage]",
-    "PROJECT_NAME[distribution]",
-    "PROJECT_NAME[documentation]",
+    "curbd[testing]",
+    "curbd[linting]",
+    "curbd[coverage]",
+    "curbd[distribution]",
+    "curbd[documentation]",
 ]
 
 
@@ -111,7 +111,7 @@ all = [
 
 [tool.setuptools]
 packages = [
-    "PROJECT_NAME",
+    "curbd",
 ]
 
 

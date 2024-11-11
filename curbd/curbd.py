@@ -1,3 +1,4 @@
+
 import math
 import random
 
@@ -5,8 +6,7 @@ import numpy as np
 import numpy.random as npr
 import numpy.linalg
 
-import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
+from matplotlib import pyplot as plt
 
 
 def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,
@@ -69,7 +69,7 @@ def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,
     dtRNN = dtData / float(dtFactor)
     nRunTot = nRunTrain + nRunFree
 
-# set up everything for training
+    # set up everything for training
 
     learnList = npr.permutation(number_units)
     iTarget = learnList[:number_learn]
@@ -111,11 +111,12 @@ def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,
     PJ = P0*np.eye(number_learn)
 
     if plotStatus is True:
-        plt.rcParams.update({'font.size': 6})
-        fig = plt.figure()
-        fig.tight_layout()
-        fig.subplots_adjust(hspace=0.4, wspace=0.4)
-        gs = GridSpec(nrows=2, ncols=4)
+        fig = None
+        #plt.rcParams.update({'font.size': 6})
+        #fig = plt.figure()
+        #fig.tight_layout()
+        #fig.subplots_adjust(hspace=0.4, wspace=0.4)
+        #gs = GridSpec(nrows=2, ncols=4)
     else:
         fig = None
 
@@ -162,38 +163,13 @@ def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,
         rModelSample = RNN[iTarget, :][:, iModelSample]
         distance = np.linalg.norm(Adata[iTarget, :] - rModelSample)
         pVar = 1 - (distance / (math.sqrt(len(iTarget) * len(tData))
-                    * stdData)) ** 2
+                                * stdData)) ** 2
         pVars.append(pVar)
         chi2s.append(chi2)
         if verbose:
             print('trial=%d pVar=%f chi2=%f' % (nRun, pVar, chi2))
         if fig:
-            fig.clear()
-            ax = fig.add_subplot(gs[0, 0])
-            ax.axis('off')
-            ax.imshow(Adata[iTarget, :])
-            ax.set_title('real rates')
-
-            ax = fig.add_subplot(gs[0, 1])
-            ax.imshow(RNN, aspect='auto')
-            ax.set_title('model rates')
-            ax.axis('off')
-
-            ax = fig.add_subplot(gs[1, 0])
-            ax.plot(pVars)
-            ax.set_ylabel('pVar')
-
-            ax = fig.add_subplot(gs[1, 1])
-            ax.plot(chi2s)
-            ax.set_ylabel('chi2s')
-
-            ax = fig.add_subplot(gs[:, 2:4])
-            idx = npr.choice(range(len(iTarget)))
-            ax.plot(tRNN, RNN[iTarget[idx], :])
-            ax.plot(tData, Adata[iTarget[idx], :])
-            ax.set_title(nRun)
-            fig.show()
-            plt.pause(0.05)
+            ...
 
     out_params = {}
     out_params['dtFactor'] = dtFactor
@@ -397,13 +373,13 @@ def threeRegionSim(number_units=100,
 
     # generate time series simulated data
     Ra = np.empty((Na, len(tData)))
-    Ra[:] = np.NaN
+    Ra[:] = np.nan
 
     Rb = np.empty((Nb, len(tData)))
-    Rb[:] = np.NaN
+    Rb[:] = np.nan
 
     Rc = np.empty((Nc, len(tData)))
-    Rc[:] = np.NaN
+    Rc[:] = np.nan
 
     for tt in range(len(tData)):
         Ra[:, tt, np.newaxis] = np.tanh(hCa)
@@ -478,65 +454,8 @@ def threeRegionSim(number_units=100,
     out['params'] = out_params
 
     if plotSim is True:
-        fig = plt.figure(figsize=[8, 8])
-        fig.tight_layout()
-        fig.subplots_adjust(hspace=0.4, wspace=0.3)
-        plt.rcParams.update({'font.size': 6})
+        ...
 
-        ax = fig.add_subplot(4, 3, 1)
-        ax.pcolormesh(tData, range(Na), Ra)
-        ax.set_title('RNN A - g={}'.format(ga))
-
-        ax = fig.add_subplot(4, 3, 2)
-        ax.pcolormesh(range(Na), range(Na), Ja)
-        ax.set_title('DI matrix A')
-
-        ax = fig.add_subplot(4, 3, 3)
-        for _ in range(3):
-            idx = random.randint(0, Na-1)
-            ax.plot(tData, Ra[idx, :])
-        ax.set_ylim(-1, 1)
-        ax.set_title('units from RNN A')
-
-        ax = fig.add_subplot(4, 3, 4)
-        ax.pcolormesh(tData, range(Nb), Rb)
-        ax.set_title('RNN B - g={}'.format(gb))
-
-        ax = fig.add_subplot(4, 3, 5)
-        ax.pcolormesh(range(Nb), range(Nb), Jb)
-        ax.set_title('DI matrix B')
-
-        ax = fig.add_subplot(4, 3, 6)
-        for _ in range(3):
-            idx = random.randint(0, Nb-1)
-            ax.plot(tData, Rb[idx, :])
-        ax.set_ylim(-1, 1)
-        ax.set_title('units from RNN B')
-
-        ax = fig.add_subplot(4, 3, 7)
-        ax.pcolormesh(tData, range(Nc), Rc)
-        ax.set_title('RNN C - g={}'.format(gc))
-
-        ax = fig.add_subplot(4, 3, 8)
-        ax.pcolormesh(range(Nc), range(Nc), Jc)
-        ax.set_title('DI matrix C')
-
-        ax = fig.add_subplot(4, 3, 9)
-        for _ in range(3):
-            idx = random.randint(0, Nc-1)
-            ax.plot(tData, Rc[idx, :])
-        ax.set_ylim(-1, 1)
-        ax.set_title('units from RNN C')
-
-        ax = fig.add_subplot(4, 3, 10)
-        ax.pcolormesh(tData, range(Nc), Rfp)
-        ax.set_title('Fixed Point Driver')
-
-        ax = fig.add_subplot(4, 3, 11)
-        ax.pcolormesh(tData, range(Nc), Rseq)
-        ax.set_title('Sequence Driver')
-        plt.pause(0.05)
-        fig.show()
     return out
 
 
@@ -591,17 +510,20 @@ def computeCURBD(sim):
     nRegions = regions.shape[0]
 
     # loop along all bidirectional pairs of regions
-    CURBD = np.empty((nRegions, nRegions), dtype=np.object)
-    CURBDLabels = np.empty((nRegions, nRegions), dtype=np.object)
+    CURBD = {(i, j): None for i in range(nRegions) for j in range(nRegions)}
+    #CURBD = np.empty((nRegions, nRegions), dtype=np.object)
+    #CURBDLabels = np.empty((nRegions, nRegions), dtype=np.object)
+    CURBDLabels = {(i, j): None for i in range(nRegions) for j in range(nRegions)}
 
-    for idx_trg in range(nRegions):
+    for key in CURBD.keys():
+        idx_trg, idx_src = key
         in_trg = regions[idx_trg, 1]
         lab_trg = regions[idx_trg, 0]
-        for idx_src in range(nRegions):
-            in_src = regions[idx_src, 1]
-            lab_src = regions[idx_src, 0]
-            sub_J = J[in_trg, :][:, in_src]
-            CURBD[idx_trg, idx_src] = sub_J.dot(RNN[in_src, :])
-            CURBDLabels[idx_trg, idx_src] = "{} to {}".format(lab_src,
-                                                              lab_trg)
+        in_src = regions[idx_src, 1]
+        lab_src = regions[idx_src, 0]
+        sub_J = J[in_trg, :][:, in_src]
+        CURBD[(idx_trg, idx_src)] = sub_J.dot(RNN[in_src, :])
+        CURBDLabels[(idx_trg, idx_src)] = "{} to {}".format(lab_src,
+                                                            lab_trg)
+
     return (CURBD, CURBDLabels)
