@@ -1,12 +1,8 @@
-
 import math
-import random
 
 import numpy as np
 import numpy.random as npr
 import numpy.linalg
-
-from matplotlib import pyplot as plt
 
 
 def trainMultiRegionRNN(activity, dtData=1, dtFactor=1, g=1.5, tauRNN=0.01,

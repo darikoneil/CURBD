@@ -1,20 +1,6 @@
-#!/usr/bin/env python
-"""
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% example script to generate simulated interacting brain regions and
-% perform Current-Based Decomposition (CURBD). Ref:
-%
-% Perich MG et al. Inferring brain-wide interactions using data-constrained
-% recurrent neural network models. bioRxiv. DOI: https://doi.org/10.1101/2020.12.18.423348
-%
-% Written by Matthew G. Perich and Eugene Carter. Updated December 2020.
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-"""
-
 import numpy as np
 
-import curbd
+from curbd import curbd
 
 from matplotlib import pyplot as plt
 
@@ -59,23 +45,3 @@ for i in range(n_regions):
         ax[i, j].title.set_fontsize(8)
         ax[i, j].xaxis.label.set_fontsize(8)
         ax[i, j].yaxis.label.set_fontsize(8)
-
-#n_regions = curbd_arr.shape[0]
-#n_region_units = curbd_arr[0, 0].shape[0]
-
-#fig = pylab.figure(figsize=[8, 8])
-#count = 1
-#for iTarget in range(n_regions):
-#    for iSource in range(n_regions):
-#        axn = fig.add_subplot(n_regions, n_regions, count)
-#        count += 1
-#        axn.pcolormesh(model['tRNN'], range(n_region_units),
-#                       curbd_arr[iTarget, iSource])
-#        axn.set_xlabel('Time (s)')
-#        axn.set_ylabel('Neurons in {}'.format(regions[iTarget, 0]))
-#        axn.set_title(curbd_labels[iTarget, iSource])
-#        axn.title.set_fontsize(8)
-#        axn.xaxis.label.set_fontsize(8)
-#        axn.yaxis.label.set_fontsize(8)
-#fig.subplots_adjust(hspace=0.4, wspace=0.3)
-#fig.show()

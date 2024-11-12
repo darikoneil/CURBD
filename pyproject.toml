@@ -35,8 +35,9 @@ classifiers = [
 
 
 dependencies = [
-    "numpy",
     "matplotlib",
+    "numpy",
+    "pydantic",
     "PyQt6",
     "seaborn",
 ]
